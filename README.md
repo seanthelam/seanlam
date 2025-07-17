@@ -1,1 +1,1 @@
-# seanlam
+# Personal Academic Website

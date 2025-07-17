@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sean D. Lam</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-purple: #7c3aed;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --dark-bg: #0f172a;
+            --darker-bg: #020617;
+            --light-text: #f1f5f9;
+            --gray-text: #94a3b8;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --gradient: linear-gradient(135deg, var(--primary-blue), var(--secondary-purple));
+            --accent-gradient: linear-gradient(135deg, var(--accent-cyan), var(--accent-emerald));
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--gray-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--light-text);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23334155" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--gray-text);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--gray-text);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--light-text);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            margin: 0 auto;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+        }
+
+        .about-text p {
+            color: var(--gray-text);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .interest-tag {
+            background: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Research Section */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .research-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .research-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .research-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--light-text);
+        }
+
+        .research-card p {
+            color: var(--gray-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .research-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .research-tag {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary-blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Publications Section */
+        .publications-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .publication-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .publication-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--light-text);
+        }
+
+        .publication-item .authors {
+            color: var(--gray-text);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-item .venue {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        /* News Section */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .news-item {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .news-date {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-item h3 {
+            margin-bottom: 1rem;
+            color: var(--light-text);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gray-text);
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--light-text);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--darker-bg);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content > * {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-content > *:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .hero-content > *:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .hero-content > *:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Sean D. Lam</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#publications">Posters</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Sean D. Lam</h1>
+            <p class="subtitle">Undergraduate Researcher & Student-Athlete</p>
+            <p class="description">
+                Exploring the intersection of physics, chemistry, materials science, and quantum computing. 
+                Passionate about computational research and innovation in emerging technologies.
+            </p>
+            <div class="cta-buttons">
+                <a href="#research" class="btn btn-primary">View Research</a>
+                <a href="CV/Lam_Sean_CV_071725.pdf" class="btn btn-secondary">Download CV</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <p><img src ="Sean Lam - Headshot.jpg" style="width:300px; height:300px; object-fit:cover;"></p>
+                </div>
+                <div class="about-text">
+                    <h3>Third-Year Undergraduate Student</h3>
+                    <p>
+                        I'm an undergraduate student passionate about the convergence of physics, chemistry, 
+                        materials science, and computational science. My research interests span in chemical
+                        physics and the development of novel algorithms to understand complex systems within
+                        quantum and energy materials. I am also interested in pursuing graduate school and academia.
+                    </p>
+                    <p>
+                        Outside of academics, I am a track and field athlete, specialized in long sprints, 400m hurdles,
+                        and triple jump. I am the President of the Society of Physics Students Chapter at Colorado College.
+                        I am a mental health advocate through Colorado College's Morgan's Message Chapter. I volunteer as a 
+                        multimedia content creator for WITHUS, a clothing brand I helped lay the foundations for.
+                    </p>
+                    <div class="interests">
+                        <span class="interest-tag">Quantum Computing</span>
+                        <span class="interest-tag">Materials Science</span>
+                        <span class="interest-tag">Chemical Physics</span>
+                        <span class="interest-tag">Renewable Energy</span>
+                        <span class="interest-tag">Quantum Materials</span>
+                        <span class="interest-tag">Machine Learning</span>
+                        <span class="interest-tag">Python</span>
+                        <span class="interest-tag">Research</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="research">
+        <div class="container">
+            <h2 class="section-title">Research Projects</h2>
+            <div class="research-grid">
+                <div class="research-card">
+                    <h3>QuScope: Quantum Algorithms for Microscopy</h3>
+                    <p>
+                        Developing quantum computing algorithms to enhance microscopy image processing,
+                        EELS spectra analysis, and XRD analysis.
+                        <a href="https:/github.com/QuScope" class="contact-link">💻 GitHub</a>
+                    </p>
+                    <div class="research-tags">
+                        <span class="research-tag">Quantum Computing</span>
+                        <span class="research-tag">Materials Science</span>
+                        <span class="research-tag">HPC</span>
+                        <span class="research-tag">Machine Learning</span>
+                        <span class="research-tag">Electron Microscopy</span>
+                        <span class="research-tag">Spectroscopy</span>
+                        <span class="research-tag">X-ray Diffraction</span>
+                        <span class="research-tag">Data Analysis and Algorithms</span>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <h3>Computational Quantum Chemistry Research (Starting Fall 2025)</h3>
+                    <p>
+                        Using high-performance computing to simulate
+                        ab initio non-adiabatic quantum dynamics.
+                    </p>
+                    <div class="research-tags">
+                        <span class="research-tag">Computational Chemistry</span>
+                        <span class="research-tag">HPC</span>
+                        <span class="research-tag">Molecular Dynamics</span>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <h3>pyonized</h3>
+                    <p>
+                        Developing a Python package for modeling Diffuse Ionized Gas (DIG)
+                        in 4D (3D space + radial velocity).
+                        <a href="https:/github.com/Deech08/pyonized" class="contact-link">💻 GitHub</a>
+                    </p>
+                    <div class="research-tags">
+                        <span class="research-tag">Astrophysics</span>
+                        <span class="research-tag">Python</span>
+                        <span class="research-tag">Data Science</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="publications">
+        <div class="container">
+            <h2 class="section-title">Posters</h2>
+            <div class="publications-list">
+                <div class="publication-item">
+                    <h3>Developing Quantum Machine Learning Techniques to Enhance Microscopy Data Analysis</h3>
+                    <p class="authors">Sean D. Lam, Dr. Roberto dos Reis</p>
+                    <p class="venue">MICRO Summit 2025 @ Northwestern University</p>
+                    <p><a href="https://www.mccormick.northwestern.edu/news/articles/2025/04/micro-summit-convenes-undergraduates-for-materials-science-research-career-exploration/" class="contact-link">💻 Related Article</a></p>
+                </div>
+                <div class="publication-item">
+                    <h3>pyonized: Python Package for Modeling Ionized Gas</h3>
+                    <p class="authors">Sean D. Lam, Dr. Dhanesh Krishnarao</p>
+                    <p class="venue">Colorado College SCoRe Symposium Spring 2025</p>
+                    <p><a href="https://www.coloradocollege.edu/offices/careercenter/documents/Symposium-Program-2025.pdf" class="contact-link">💻 Symposium Program</a></p>
+                </div>
+                <div class="publication-item">
+                    <h3>pyonized: Modeling Ionized Gas in Four Dimensions</h3>
+                    <p class="authors">Sean D. Lam, Dr. Dhanesh Krishnarao</p>
+                    <p class="venue">American Astronomical Society Winter Meeting 2025</p>
+                    <p><a href="https://aas245-aas.ipostersessions.com/?s=2E-6F-BC-92-2F-B5-E6-14-71-90-29-89-FB-0E-A3-50" class="contact-link">💻 Poster</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news">
+        <div class="container">
+            <h2 class="section-title">Recent News</h2>
+            <div class="news-grid">
+                <div class="news-item">
+                    <div class="news-date">June 2025</div>
+                    <h3>Starting Summer REU Fellowship</h3>
+                    <p>Starting the Northwestern MRSEC REU and conducting quantum computing and microscopy research with Dr. Roberto dos Reis.</p>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">May 2025</div>
+                    <h3>Awarded ACS Undergraduate Award in Physical Chemistry</h3>
+                    <p>Recognized for excellence in physical chemistry based on research, coursework, and dedication to the field.</p>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">May 2025</div>
+                    <h3>Dean's List & SCAC Academic Honor Roll</h3>
+                    <p>Awarded for high performance in academics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <p>
+                    Interested in collaboration or want to discuss research opportunities? 
+                    I'd love to hear from you!
+                </p>
+                <div class="contact-links">
+                    <a href="mailto:s_lam2023@coloradocollege.edu" class="contact-link">
+                        📧 Email
+                    </a>
+                    <a href="https://github.com/seanthelam" class="contact-link">
+                        💻 GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/sean-d-lam" class="contact-link">
+                        🔗 LinkedIn
+                    </a>
+                    <a href="https://orcid.org/0009-0009-6546-3501" class="contact-link">
+                        🎓 ORCID
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sean D. Lam. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(15, 23, 42, 0.98)';
+            } else {
+                nav.style.background = 'rgba(15, 23, 42, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections except hero
+        document.querySelectorAll('section:not(.hero)').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
